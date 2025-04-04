@@ -1,5 +1,6 @@
 import 'package:dashboard_responsivo/adicionarTarefa.dart';
 import 'package:dashboard_responsivo/detalhesTarefa.dart';
+import 'package:dashboard_responsivo/infografico.dart';
 import 'package:flutter/material.dart';
 
 import 'Tarefa.dart';
@@ -12,6 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String filtro = 'todas';
   final List<Tarefa> tarefas = [
@@ -55,27 +57,6 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            // ListTile(
-            //   leading: Icon(Icons.home),
-            //   title: Text('Home'),
-            //   onTap: () {
-            //     Navigator.pop(context);
-            //   },
-            // ),
-            // ListTile(
-            //   leading: Icon(Icons.task),
-            //   title: Text('Minhas Tarefas'),
-            //   onTap: () {
-            //     Navigator.pop(context);
-            //   },
-            // ),
-            // ListTile(
-            //   leading: Icon(Icons.settings),
-            //   title: Text('Configurações'),
-            //   onTap: () {
-            //     Navigator.pop(context);
-            //   },
-            // ),
             SizedBox(height: 50),
             GestureDetector(
               onTap: () {
@@ -158,9 +139,7 @@ class _HomePageState extends State<HomePage> {
               onTap: () async {
                 final novaTarefa = await Navigator.push<Tarefa>(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => AdicionarTarefa(),
-                  ),
+                  MaterialPageRoute(builder: (context) => AdicionarTarefa()),
                 );
 
                 if (novaTarefa != null) {
@@ -191,7 +170,9 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Image.asset(
-                          'assets/image/adicionarTarefa.png', height: 90),
+                        'assets/image/adicionarTarefa.png',
+                        height: 90,
+                      ),
                       Text(
                         "Adicionar \n Tarefa",
                         style: TextStyle(color: Colors.white, fontSize: 24),
@@ -215,10 +196,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.95,
+                width: MediaQuery.of(context).size.width * 0.95,
                 height: 120,
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.transparent, width: 5),
@@ -250,10 +228,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.45,
+                    width: MediaQuery.of(context).size.width * 0.45,
                     height: 200,
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.transparent, width: 5),
@@ -292,21 +267,21 @@ class _HomePageState extends State<HomePage> {
                             ),
                             tarefas.last.concluida
                                 ? Text(
-                              "Tarefa Concluída!",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.green,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
+                                  "Tarefa Concluída!",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
                                 : Text(
-                              "Tarefa Pendente!",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.red[300],
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                                  "Tarefa Pendente!",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.red[300],
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                             SizedBox(height: 20),
                             ElevatedButton(
                               onPressed: () {
@@ -314,8 +289,7 @@ class _HomePageState extends State<HomePage> {
                                   context,
                                   MaterialPageRoute(
                                     builder:
-                                        (context) =>
-                                        DetalhesTarefa(
+                                        (context) => DetalhesTarefa(
                                           tarefa: tarefas.last,
                                         ),
                                   ),
@@ -338,10 +312,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.45,
+                    width: MediaQuery.of(context).size.width * 0.45,
                     height: 200,
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.transparent, width: 5),
@@ -372,9 +343,7 @@ class _HomePageState extends State<HomePage> {
                             SizedBox(height: 10),
                             if (tarefas.any((t) => !t.concluida)) ...[
                               Text(
-                                tarefas
-                                    .firstWhere((t) => !t.concluida)
-                                    .titulo,
+                                tarefas.firstWhere((t) => !t.concluida).titulo,
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.white,
@@ -387,10 +356,9 @@ class _HomePageState extends State<HomePage> {
                                     context,
                                     MaterialPageRoute(
                                       builder:
-                                          (context) =>
-                                          DetalhesTarefa(
+                                          (context) => DetalhesTarefa(
                                             tarefa: tarefas.firstWhere(
-                                                  (t) => !t.concluida,
+                                              (t) => !t.concluida,
                                             ),
                                           ),
                                     ),
@@ -407,17 +375,16 @@ class _HomePageState extends State<HomePage> {
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
-                            ] else
-                              ...[
-                                Text(
-                                  "Nenhuma tarefa pendente!",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                  ),
+                            ] else ...[
+                              Text(
+                                "Nenhuma tarefa pendente!",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
                                 ),
-                              ],
+                              ),
+                            ],
                           ],
                         ),
                       ),
@@ -427,14 +394,8 @@ class _HomePageState extends State<HomePage> {
               ),
 
               Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.95,
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.5,
+                width: MediaQuery.of(context).size.width * 0.95,
+                height: MediaQuery.of(context).size.height * 0.5,
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.transparent, width: 5),
                   borderRadius: BorderRadius.circular(20),
@@ -452,11 +413,11 @@ class _HomePageState extends State<HomePage> {
                   child: Builder(
                     builder: (context) {
                       final List<Tarefa> tarefasFiltradas =
-                      filtro == 'pendentes'
-                          ? tarefas.where((t) => !t.concluida).toList()
-                          : filtro == 'concluidas'
-                          ? tarefas.where((t) => t.concluida).toList()
-                          : tarefas;
+                          filtro == 'pendentes'
+                              ? tarefas.where((t) => !t.concluida).toList()
+                              : filtro == 'concluidas'
+                              ? tarefas.where((t) => t.concluida).toList()
+                              : tarefas;
 
                       return Expanded(
                         child: ListView.builder(
@@ -470,9 +431,9 @@ class _HomePageState extends State<HomePage> {
                               child: ListTile(
                                 leading: CircleAvatar(
                                   child:
-                                  tarefasFiltradas[index].concluida
-                                      ? Icon(Icons.done)
-                                      : Icon(Icons.close),
+                                      tarefasFiltradas[index].concluida
+                                          ? Icon(Icons.done)
+                                          : Icon(Icons.close),
                                 ),
                                 title: Text(tarefasFiltradas[index].titulo),
                                 trailing: Icon(Icons.chevron_right),
@@ -481,8 +442,7 @@ class _HomePageState extends State<HomePage> {
                                     context,
                                     MaterialPageRoute(
                                       builder:
-                                          (context) =>
-                                          DetalhesTarefa(
+                                          (context) => DetalhesTarefa(
                                             tarefa: tarefasFiltradas[index],
                                           ),
                                     ),
@@ -501,6 +461,47 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.shifting,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: const Color.fromARGB(255, 201, 201, 201),
+        backgroundColor: Colors.blue,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+            backgroundColor: Color.fromARGB(255, 172, 128, 255),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Procurar',
+            backgroundColor: Color.fromARGB(255, 172, 128, 255),
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+      ),
     );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+
+      switch (_selectedIndex) {
+        case 0:
+          Navigator.push<Tarefa>(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
+          break;
+        case 1:
+          Navigator.push<Tarefa>(
+            context,
+            MaterialPageRoute(builder: (context) => Infografico()),
+          );
+          break;
+      }
+    });
   }
 }

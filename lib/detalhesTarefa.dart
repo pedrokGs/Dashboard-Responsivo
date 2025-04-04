@@ -19,7 +19,7 @@ class _DetalhesTarefaState extends State<DetalhesTarefa> {
           "Detalhes da Tarefa",
           style: TextStyle(color: Color(0xFFFFFFFF)),
         ),
-        backgroundColor: Color(0xFF2196F3), // Azul Primário
+        backgroundColor: Color(0xFF2196F3),
       ),
       body: Container(
         decoration: BoxDecoration(
